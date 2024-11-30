@@ -150,7 +150,7 @@ endif
 VLDIR ?= .
 LIBTOOL ?= libtool
 
-STD_CLFAGS = $(CFLAGS)
+STD_CFLAGS = $(CFLAGS)
 STD_CFLAGS += -std=c99
 STD_CFLAGS += -Wall -Wextra
 STD_CFLAGS += -Wno-unused-function -Wno-long-long -Wno-variadic-macros
@@ -233,7 +233,7 @@ STD_CFLAGS += -m$(march) -D_GNU_SOURCE -fno-stack-protector
 STD_LDFLAGS += -m$(march) -Wl,--rpath,\$$ORIGIN/ -Wl,--as-needed
 endif
 
-# Convert back DISALBE_*="no" flags to be empty
+# Convert back DISABLE_*="no" flags to be empty
 ifeq "$(DISABLE_SSE2)" "no"
 override DISABLE_SSE2:=
 endif
@@ -327,8 +327,8 @@ no_dep_targets := clean archclean distclean help
 
 include make/dll.mak
 include make/bin.mak
-include make/matlab.mak
-include make/octave.mak
+# include make/matlab.mak
+# include make/octave.mak
 include make/doc.mak
 include make/dist.mak
 
@@ -360,7 +360,8 @@ info:
 	$(call echo-var,DISABLE_THREADS)
 	$(call echo-var,DISABLE_OPENMP)
 	@printf "\nThere are %s lines of code.\n" \
-	`cat $(m_src) $(mex_src) $(dll_src) $(dll_hdr) $(bin_src) | wc -l`
+    `cat $(m_src) $(dll_src) $(dll_hdr) $(bin_src) | wc -l`
+	#`cat $(m_src) $(mex_src) $(dll_src) $(dll_hdr) $(bin_src) | wc -l`
 
 # Holw help works: cat this file,
 # skip the first block until an empty line is found (twice)
